@@ -8,4 +8,4 @@ def fixedP(f,x0,h):
 
 
 
-print str(fixedP(eval("lambda x : (x**2 +4)/4.0"),1,.0000000011))	
+print str(fixedP(eval("lambda x : (x**2 +4)/4.0"),0,.00011))	

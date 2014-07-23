@@ -1,8 +1,9 @@
 import Debug.Trace
-
+import Graphics.EasyPlot
 makeGrid :: (Enum a, Num a)=>a->a->a->[a]
 
 makeGrid start end delta = [start,(start+delta)..end]
+
 
 
 
@@ -22,6 +23,11 @@ fixedPoint f xn h = if ( (abs (xn1 -xn)) >h)
 							where
 								xn1=f xn
 
+
+
+
+
+showSolution = plot (makeGrid0 0 10 .00001) (eulers 0 10 1000000 1)
 
 
 
