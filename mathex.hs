@@ -1,14 +1,35 @@
+import Debug.Trace
+
 makeGrid :: (Enum a, Num a)=>a->a->a->[a]
 
 makeGrid start end delta = [start,(start+delta)..end]
 
 
-evalDiffEq diffEq tn yn = diffEq tn yn
 
 
-eulersMethod  diffEq tList yList =0
+eulers t0 t1 n y0  = reverse (eulersMethod1 (\t y -> y) (makeGrid t0 t1 ((t1-t0)/n)) [y0] ((t1-t0)/n))
 
-eulers t0 t1 h y0 diffEq = eulersMethod (\t y -> diffEq) (makeGrid t0 t1 ((t1-t0)/h)) [y0]
+eulersMethod1  diffEq (t:ts) yList h = eulersMethod2 diffEq ts yList h
+
+eulersMethod2 diffEq [] yList h = yList
+
+eulersMethod2 diffEq (t:ts) (y:ys) h = eulersMethod2 diffEq ts ((y+ (h*(diffEq t y))) : (y:ys)) h
+
+fixedPoint ::(Show a,Num a, Ord a) => (a -> a) -> a -> a -> a
+fixedPoint f xn h = if ( (abs (xn1 -xn)) >h)
+						then (fixedPoint f xn1 h)
+						else  xn1
+							where
+								xn1=f xn
 
 
-makeDiff diffEq = (\t y -> diffEq)
+
+
+
+
+
+--(\x->(((-x^2) +((-4)*x))/4))
+
+--makeDiff diffEq = (\t y -> y)
+
+--evalDiffEq diffEq tn yn = diffEq tn yn
