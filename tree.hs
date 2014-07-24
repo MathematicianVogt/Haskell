@@ -1,3 +1,4 @@
+--Ryan Vogt
 data Node a = Node {value :: a, leftNode :: Node a, rightNode :: Node a}
 			| Empty
 			deriving Show
