@@ -1,3 +1,5 @@
+import Graphics.Gnuplot.Simple
+--Ryan Vogt
 --Runge Kutta solving differential equations
 makeGrid start end h = [start,(start+h)..end]
 returnTail (x:xs) = xs
@@ -10,7 +12,11 @@ rungeKuttaSolver diffEq (tn:ts) (yn:ys) h = rungeKuttaSolver diffEq ts ( (yn  + 
 											k3= diffEq (tn + (h/2)) (yn + (h/2)*k2)
 											k4 = diffEq (tn + h) (yn+(h*k3))
 
+rungeKutta diffEq t0 t1 y0 n = plotList [PNG "./DiffSolution.png"] (makeSolutionListTuples (makeGrid t0 t1 ((t1-t0)/n)) (reverse( rungeKuttaSolver diffEq (returnTail (makeGrid t0 t1 ((t1-t0)/n))) [y0] ((t1-t0)/n))))
 
-rungeKutta diffEq t0 t1 y0 n = reverse( rungeKuttaSolver diffEq (returnTail (makeGrid t0 t1 ((t1-t0)/n))) [y0] ((t1-t0)/n))
+--asumption lists same size, do not check
+makeSolutionListTuples (th:tt) (yh:yt) = (th,yh) : (makeSolutionListTuples tt yt)
+makeSolutionListTuples [] [] = []
+
 
 
