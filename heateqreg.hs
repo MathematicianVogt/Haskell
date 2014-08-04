@@ -1,5 +1,6 @@
 import Debug.Trace
 
+
 makeGridx start end h = [start,(start+h)..end]
 makeGridt start end h = [start,(start+h)..end]
 
@@ -23,11 +24,13 @@ work alpha (x:xs) (t:ts) dx dt startx endx (hLine:(h1Line : (h2Line : tLine))) =
 
 generateNewLine:: (Eq t1, Fractional t, Num t1) =>t-> [t1]-> [t2]->t-> t-> [(t1, t2, t)]-> [(t1, t2, t)]-> [t1]-> [(t1, t2, t)]
 generateNewLine alpha (x:xs) (t:ts) dx dt (hLine:(h1Line : (h2Line : tLine))) nextList xNew = if(x==0 || (null xs))
-																						then (x,t,0) :(generateNewLine alpha xs (t:ts) dx dt (h1Line : (h2Line : tLine)) (nextList ++ [(x,t,(newPhi (third hLine) (third h1Line) (third h2Line) dx dt alpha ))]) (xNew ++ [x]) )
-																						else (x,t,(newPhi (third hLine) (third h1Line) (third h2Line) dx dt alpha )) : (generateNewLine alpha xs (t:ts) dx dt (h1Line : (h2Line : tLine)) (nextList ++ [(x,t,(newPhi (third hLine) (third h1Line) (third h2Line) dx dt alpha ))]) (xNew ++ [x]) )
+																								then (x,t,0) :(generateNewLine alpha xs (t:ts) dx dt (hLine:(h1Line : (h2Line : tLine))) (nextList ++ [(x,t,0)]) (xNew ++ [x]) )
+																								else (x,t,(newPhi (third hLine) (third h1Line) (third h2Line) dx dt alpha )) : (generateNewLine alpha xs (t:ts) dx dt (h1Line : (h2Line : tLine)) (nextList ++ [(x,t,(newPhi (third hLine) (third h1Line) (third h2Line) dx dt alpha ))]) (xNew ++ [x]) )
 
-generateNewLine alpha [] (t:ts) dx dt  (hLine:(h1Line : (h2Line : tLine))) nextList  xList = generateNewLine alpha xList ts dx dt nextList [] []
+generateNewLine alpha [x1] (t:ts) dx dt  _ nextList  xList = [(x1,t,0)] ++ generateNewLine alpha (xList ++ [x1]) ts dx dt (nextList ++ [(x1,t,0)]) [] []
 generateNewLine _ _ [] _ _ _ _ _= []
+
+
 
 
 --calculates solution of PDE at a time step increasse
