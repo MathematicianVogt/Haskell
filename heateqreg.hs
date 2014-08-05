@@ -6,7 +6,9 @@ makeGridt start end h = [start,(start+h)..end]
 
 generateBaseLine f (x:xs) = if (null xs)
 							then (x,0,0) : []
-							else (x,0,(f x)) : (generateBaseLine f xs)
+							else if(x==0)
+									then (x,0,0) : (generateBaseLine f xs)
+									else (x,0,(f x)) : (generateBaseLine f xs)
 
 third (_,_,x)=x
 
@@ -38,3 +40,5 @@ count [] = 0
 --calculates solution of PDE at a time step increasse
 newPhi:: Fractional a=> a->a->a->a->a->a->a
 newPhi phiL phiC phiR dx dt alpha= phiC + (alpha * (dt/(dx^2)))*(phiR -(2*phiC) + phiL) 
+
+
