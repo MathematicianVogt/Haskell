@@ -1,5 +1,6 @@
-import Debug.Trace
 
+module Heateqreg where
+import Debug.Trace
 
 makeGridx start end h = [start,(start+h)..end]
 makeGridt start end h = [start,(start+h)..end]
@@ -20,7 +21,7 @@ third (_,_,x)=x
 --rb value at right boundary
 --finite difference method : procedural non par implementation
 
-fdm alpha startt endt startx endx dt dx bbFunction = work alpha (makeGridx startx endx dx) (tail (makeGridt startt endt dt)) dx dt startx endx (generateBaseLine bbFunction (makeGridx startx endx dx)) 
+fdm alpha startt endt startx endx dx dt bbFunction = work alpha (makeGridx startx endx dx) (tail (makeGridt startt endt dt)) dx dt startx endx (generateBaseLine bbFunction (makeGridx startx endx dx)) 
 
 
 work alpha (x:xs) (t:ts) dx dt startx endx (hLine:(h1Line : (h2Line : tLine))) = (hLine:(h1Line : (h2Line : tLine))) ++ (generateNewLine alpha (x:xs) (t:ts) dx dt (hLine:(h1Line : (h2Line : tLine))) [] [])
