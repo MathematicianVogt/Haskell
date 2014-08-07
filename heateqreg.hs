@@ -1,10 +1,12 @@
-
+--Ryan Vogt
 module Heateqreg where
 import Debug.Trace
-
+--generate one dimensonal grids
 makeGridx start end h = [start,(start+h)..end]
 makeGridt start end h = [start,(start+h)..end]
 
+
+--generate initial heat distribution
 generateBaseLine f (x:xs) = if (null xs)
 							then (x,0,0) : []
 							else if(x==0)
@@ -26,7 +28,7 @@ fdm alpha startt endt startx endx dx dt bbFunction = work alpha (makeGridx start
 
 work alpha (x:xs) (t:ts) dx dt startx endx (hLine:(h1Line : (h2Line : tLine))) = (hLine:(h1Line : (h2Line : tLine))) ++ (generateNewLine alpha (x:xs) (t:ts) dx dt (hLine:(h1Line : (h2Line : tLine))) [] [])
 
-
+--makes a new line to solution, while line is finished, continue recursion for a nw delta t
 generateNewLine alpha (x:xs) (t:ts) dx dt (hLine:(h1Line : (h2Line : tLine))) nextList xNew = if(x==0 || (null xs))
 																								then (x,t,0) :(generateNewLine alpha xs (t:ts) dx dt (hLine:(h1Line : (h2Line : tLine))) (nextList ++ [(x,t,0)]) (xNew ++ [x]) )
 																								else (x,t,(newPhi (third hLine) (third h1Line) (third h2Line) dx dt alpha )) : (generateNewLine alpha xs (t:ts) dx dt (h1Line : (h2Line : tLine)) (nextList ++ [(x,t,(newPhi (third hLine) (third h1Line) (third h2Line) dx dt alpha ))]) (xNew ++ [x]) )

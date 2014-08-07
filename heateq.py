@@ -77,7 +77,7 @@ def newPhiSol(x,t,phiL,phiC,phiR,dx,dt,alpha):
 def showMe(SolutionList):
 	GraphSolution(SolutionList)
 
-showMe(otherSolve(.01,0,10,0,10,.1,.01,(lambda x:(x**2+(5*x)+5))))
+showMe(otherSolve(50,0,10,0,20,1,.01,(lambda x:(x**2+(5*x)+5))))
 
 
 
