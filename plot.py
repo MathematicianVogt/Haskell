@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def GraphSolution(dataList):
+def GraphSolution(dataList,title,xLabel,yLabel,zLabel):
 	data = dataList
 
 
@@ -17,4 +17,8 @@ def GraphSolution(dataList):
 	fig = plt.figure()
 	ax = fig.gca(projection='3d')
 	ax.plot_surface(grid_x, grid_y, grid_z, cmap=plt.cm.Spectral)
+	ax.set_xlabel(xLabel)
+	ax.set_ylabel(yLabel)
+	ax.set_zlabel(zLabel)
+	ax.set_title(title)
 	plt.show()

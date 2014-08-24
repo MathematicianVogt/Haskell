@@ -74,10 +74,12 @@ def Solveit(alpha,xList,tList,phiSolutions,dx,dt):
 def newPhiSol(x,t,phiL,phiC,phiR,dx,dt,alpha):
 	return (x,t,(phiC + (alpha*(dt/(dx**2)))*(phiR-(2*phiC)+phiL)) )
 
-def showMe(SolutionList):
-	GraphSolution(SolutionList)
+def showMe(SolutionList,alpha):
+	title = "Solution to 1D heat equation with alpha = " + str(alpha)
+	GraphSolution(SolutionList,title,"x","y","z")
 
-showMe(otherSolve(1,0,10,0,20,1,.01,(lambda x:(x**2+(5*x)+5))))
+alpha=1
+showMe(otherSolve(alpha,0,10,0,20,1,.01,(lambda x:(x**2+(5*x)+5))),alpha)
 
 
 
